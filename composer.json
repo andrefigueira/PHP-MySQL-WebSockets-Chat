@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-0": {
+            "App": "lib"
+        }
+    },
+    "require": {
+        "cboden/Ratchet": "0.2.*"
+    }
+}

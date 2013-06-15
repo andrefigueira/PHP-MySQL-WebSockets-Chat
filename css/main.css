@@ -1,0 +1,23 @@
+.chat {
+	padding: 10px;
+	margin: 10px 0 10px 0;
+	height: 380px;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+	.chat .chat-message {
+		padding: 10px;
+		margin: 0 0 10px 0;
+		font-size: 14px;
+		display: block;
+		border-bottom: 1px solid #EEE;
+	}
+	
+#message {
+	width: 837px;
+}
+
+.btn { margin: -10px 0 0 0; padding: 4px 25px;}
