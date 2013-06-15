@@ -22,7 +22,7 @@
 	
 	<script>
 	
-	var conn = new WebSocket('ws://localhost:8080?convoID=123');
+	var conn = new WebSocket('ws://localhost:8080');
 	
 	conn.onopen = function(e){
 	
