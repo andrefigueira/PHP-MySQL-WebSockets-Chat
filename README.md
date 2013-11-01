@@ -1,4 +1,4 @@
-PHP-MySQL-Sockets-Chat
+PHP-MySQL-WebSockets-Chat
 ======================
 
 A PHP/MySQL driven chat using sockets, This is the most basic example of how to have a MySQL interaction with a socket powered chat.
