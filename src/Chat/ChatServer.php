@@ -15,7 +15,7 @@ final class ChatServer implements MessageComponentInterface
     private SplObjectStorage $clients;
 
     public function __construct(
-        private readonly MessageRepository $repository,
+        private readonly MessageRepositoryInterface $repository,
         private readonly LoggerInterface $logger,
     ) {
         $this->clients = new SplObjectStorage();

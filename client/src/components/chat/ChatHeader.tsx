@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { cn, getAvatarColor, getInitials } from '@/lib/utils'
 import type { ConnectionStatus, User } from '@/types/chat'
-import { LogOut, MessageCircle, Wifi, WifiOff } from 'lucide-react'
+import { LogOut, MessageCircle } from 'lucide-react'
 
 interface ChatHeaderProps {
   user: User

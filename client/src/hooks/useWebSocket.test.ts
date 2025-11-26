@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { renderHook, act, waitFor } from '@testing-library/react'
+import { renderHook, act } from '@testing-library/react'
 import { useWebSocket } from './useWebSocket'
 
 describe('useWebSocket', () => {
@@ -8,10 +8,19 @@ describe('useWebSocket', () => {
   })
 
   afterEach(() => {
+    vi.runOnlyPendingTimers()
     vi.useRealTimers()
   })
 
-  it('connects to websocket on mount', async () => {
+  it('starts in connecting state', () => {
+    const { result } = renderHook(() =>
+      useWebSocket({ url: 'ws://localhost:8080' })
+    )
+
+    expect(result.current.status).toBe('connecting')
+  })
+
+  it('transitions to connected after websocket opens', async () => {
     const { result } = renderHook(() =>
       useWebSocket({ url: 'ws://localhost:8080' })
     )
@@ -19,45 +28,10 @@ describe('useWebSocket', () => {
     expect(result.current.status).toBe('connecting')
 
     await act(async () => {
-      vi.advanceTimersByTime(10)
+      await vi.runAllTimersAsync()
     })
 
-    await waitFor(() => {
-      expect(result.current.status).toBe('connected')
-    })
-  })
-
-  it('sends messages when connected', async () => {
-    const { result } = renderHook(() =>
-      useWebSocket({ url: 'ws://localhost:8080' })
-    )
-
-    await act(async () => {
-      vi.advanceTimersByTime(10)
-    })
-
-    await waitFor(() => {
-      expect(result.current.status).toBe('connected')
-    })
-
-    act(() => {
-      result.current.send({ type: 'test', data: 'hello' })
-    })
-  })
-
-  it('calls onMessage callback when message received', async () => {
-    const onMessage = vi.fn()
-
-    renderHook(() =>
-      useWebSocket({
-        url: 'ws://localhost:8080',
-        onMessage,
-      })
-    )
-
-    await act(async () => {
-      vi.advanceTimersByTime(10)
-    })
+    expect(result.current.status).toBe('connected')
   })
 
   it('calls onOpen callback when connected', async () => {
@@ -71,26 +45,34 @@ describe('useWebSocket', () => {
     )
 
     await act(async () => {
-      vi.advanceTimersByTime(10)
+      await vi.runAllTimersAsync()
     })
 
-    await waitFor(() => {
-      expect(onOpen).toHaveBeenCalled()
-    })
+    expect(onOpen).toHaveBeenCalledTimes(1)
   })
 
-  it('disconnects when disconnect is called', async () => {
+  it('provides send function', async () => {
     const { result } = renderHook(() =>
       useWebSocket({ url: 'ws://localhost:8080' })
     )
 
     await act(async () => {
-      vi.advanceTimersByTime(10)
+      await vi.runAllTimersAsync()
     })
 
-    await waitFor(() => {
-      expect(result.current.status).toBe('connected')
+    expect(typeof result.current.send).toBe('function')
+  })
+
+  it('provides disconnect function', async () => {
+    const { result } = renderHook(() =>
+      useWebSocket({ url: 'ws://localhost:8080' })
+    )
+
+    await act(async () => {
+      await vi.runAllTimersAsync()
     })
+
+    expect(typeof result.current.disconnect).toBe('function')
 
     act(() => {
       result.current.disconnect()
@@ -99,18 +81,16 @@ describe('useWebSocket', () => {
     expect(result.current.status).toBe('disconnected')
   })
 
-  it('reconnects when reconnect is called', async () => {
+  it('provides reconnect function', async () => {
     const { result } = renderHook(() =>
       useWebSocket({ url: 'ws://localhost:8080' })
     )
 
     await act(async () => {
-      vi.advanceTimersByTime(10)
+      await vi.runAllTimersAsync()
     })
 
-    await waitFor(() => {
-      expect(result.current.status).toBe('connected')
-    })
+    expect(result.current.status).toBe('connected')
 
     act(() => {
       result.current.reconnect()

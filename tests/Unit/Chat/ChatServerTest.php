@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Tests\Unit\Chat;
 
 use App\Chat\ChatServer;
-use App\Chat\MessageRepository;
+use App\Chat\MessageRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Ratchet\ConnectionInterface;
 
 final class ChatServerTest extends TestCase
 {
-    private MessageRepository $mockRepository;
+    private MessageRepositoryInterface $mockRepository;
     private LoggerInterface $mockLogger;
     private ChatServer $server;
 
     protected function setUp(): void
     {
-        $this->mockRepository = $this->createMock(MessageRepository::class);
+        $this->mockRepository = $this->createMock(MessageRepositoryInterface::class);
         $this->mockLogger = $this->createMock(LoggerInterface::class);
         $this->server = new ChatServer($this->mockRepository, $this->mockLogger);
     }

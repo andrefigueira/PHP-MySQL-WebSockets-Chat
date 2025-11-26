@@ -8,7 +8,7 @@ use App\Database\Connection;
 use PDO;
 use Psr\Log\LoggerInterface;
 
-final class MessageRepository
+final class MessageRepository implements MessageRepositoryInterface
 {
     private PDO $db;
 
