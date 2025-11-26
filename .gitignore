@@ -1,0 +1,28 @@
+# Dependencies
+/vendor/
+/client/node_modules/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+/client/dist/
+
+# Logs
+*.log
+logs/
+
+# Cache
+.phpunit.cache/
+.php-cs-fixer.cache

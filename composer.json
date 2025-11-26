@@ -1,10 +1,27 @@
 {
+    "name": "andrefigueira/websocket-chat",
+    "description": "Modern real-time chat application using WebSockets",
+    "type": "project",
+    "license": "MIT",
     "autoload": {
-        "psr-0": {
-            "App": "lib"
+        "psr-4": {
+            "App\\": "src/"
         }
     },
     "require": {
-        "cboden/Ratchet": "0.2.*"
+        "php": "^8.2",
+        "cboden/ratchet": "^0.4",
+        "vlucas/phpdotenv": "^5.6",
+        "monolog/monolog": "^3.0",
+        "ramsey/uuid": "^4.7"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^11.0",
+        "mockery/mockery": "^1.6"
+    },
+    "scripts": {
+        "serve": "php bin/server.php",
+        "analyse": "phpstan analyse src --level=6"
     }
 }
